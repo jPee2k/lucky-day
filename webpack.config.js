@@ -3,14 +3,12 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
-const pages = ['index.html', 'catalog.html'];
+const pages = ['index.html'];
 const multipleHtmlPlugins = pages
-  .map((templateName) => {
-    return new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, `dist/${templateName}`),
-      template: `src/${templateName}`,
-    });
-  });
+  .map((templateName) => new HtmlWebpackPlugin({
+    filename: path.resolve(__dirname, `dist/${templateName}`),
+    template: `src/${templateName}`,
+  }));
 
 module.exports = {
   mode: process.env.NODE_ENV || 'development',
@@ -39,13 +37,9 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.(html)$/, use: ['html-loader'],
-      },
+      { test: /\.(html)$/, use: ['html-loader'] },
       { test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] },
-      {
-        test: /\.s[ac]ss$/i, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
-      },
+      { test: /\.s[ac]ss$/i, use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'] },
       {
         test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
         type: 'asset/resource',
@@ -76,7 +70,7 @@ module.exports = {
       filename: 'css/bundle.css',
     }),
     // new FaviconsWebpackPlugin({
-    //   logo: path.resolve(__dirname, 'src/images/icons/favicon-512.png'),
+    //   logo: path.resolve(__dirname, 'src/images/icons/favicon.svg'),
     //   prefix: '',
     //   publicPath: 'images/favicons',
     //   outputPath: path.resolve(__dirname, 'dist/images/favicons'),
