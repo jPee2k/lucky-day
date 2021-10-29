@@ -1,0 +1,16 @@
+.idea
+.vscode
+
+dist/
+downloads/
+
+*.log
+*.pdf
+*.psd
+
+node_modules/
+npm-debug.*
+
+Thumbs.db
+__MACOSX
+.DS_Store
