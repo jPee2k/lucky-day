@@ -3,6 +3,7 @@ import onChange from 'on-change';
 import unwatchedState from './state.js';
 import resources from './locale/index.js';
 import app from './app.js';
+import render from './view.js';
 
 const initApp = async () => {
   const i18n = i18next.createInstance();
@@ -12,7 +13,7 @@ const initApp = async () => {
   });
 
   const state = onChange(unwatchedState, (path, value) => {
-    // TODO render
+    render(path, value, state, i18n);
   });
 
   app(state, i18n);

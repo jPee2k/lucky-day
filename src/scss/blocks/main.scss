@@ -1,0 +1,274 @@
+.main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.main__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  gap: 5px;
+
+  max-width: 600px;
+
+  .button {
+    margin: 5px;
+  }
+}
+
+.main__wrapper {
+  position: relative;
+  margin: auto;
+
+  flex-shrink: 0;
+
+  width: 600px;
+  height: 600px;
+  overflow: hidden;
+
+  font-size: 16px;
+
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.main__list {
+  position: absolute;
+
+  width: 83.3%;
+  height: 83.3%;
+  margin: 8.33%;
+  padding: 0;
+
+  overflow: hidden;
+  border-radius: 50%;
+
+  list-style: none;
+}
+
+.main__center {
+  position: absolute;
+  top: 46.66%;
+  left: 46.66%;
+  z-index: 100;
+  border-radius: 50%;
+  width: 6.5%;
+  height: 6.5%;
+  background-color: white;
+  background-image: url('../images/icons/star.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+}
+
+.main__item {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  display: block;
+  height: 50%;
+  width: 50%;
+
+  text-align: center;
+  overflow: hidden;
+  transform-origin: 100% 100%;
+  pointer-events: none;
+
+  color: white;
+
+  &:nth-child(1) {
+    transform: skew(60deg);
+
+    .main__button {
+      background-color: chocolate;
+    }
+  }
+
+  &:nth-child(2) {
+    transform: rotate(30deg) skew(60deg);
+
+    .main__button {
+      background-color: teal;
+    }
+  }
+
+  &:nth-child(3) {
+    transform: rotate(60deg) skew(60deg);
+
+    .main__button {
+      background-color: goldenrod;
+    }
+  }
+
+  &:nth-child(4) {
+    transform: rotate(90deg) skew(60deg);
+
+    .main__button {
+      background-color: maroon;
+    }
+  }
+
+  &:nth-child(5) {
+    transform: rotate(120deg) skew(60deg);
+
+    .main__button {
+      background-color: rebeccapurple;
+    }
+  }
+
+  &:nth-child(6) {
+    transform: rotate(150deg) skew(60deg);
+
+    .main__button {
+      background-color: lightslategray;
+    }
+  }
+
+  &:nth-child(7) {
+    transform: rotate(180deg) skew(60deg);
+
+    .main__button {
+      background-color: mediumvioletred;
+    }
+  }
+
+  &:nth-child(8) {
+    transform: rotate(210deg) skew(60deg);
+
+    .main__button {
+      background-color: steelblue;
+    }
+  }
+
+  &:nth-child(9) {
+    transform: rotate(240deg) skew(60deg);
+
+    .main__button {
+      background-color: lightskyblue;
+    }
+  }
+
+  &:nth-child(10) {
+    transform: rotate(270deg) skew(60deg);
+
+    .main__button {
+      background-color: mediumseagreen;
+    }
+  }
+
+  &:nth-child(11) {
+    transform: rotate(300deg) skew(60deg);
+
+    .main__button {
+      background-color: olive;
+    }
+  }
+
+  &:nth-child(12) {
+    transform: rotate(330deg) skew(60deg);
+
+    .main__button {
+      background-color: tomato;
+    }
+  }
+}
+
+.main__button {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  margin-top: 28%;
+  margin-left: 28%;
+
+  transform: skew(-60deg) rotate(-75deg);
+
+  span {
+    display: block;
+    transform: rotate(90deg) translate(12px, 12px);
+  }
+}
+
+.main__flag {
+  position: absolute;
+  top: calc(50% - 55px / 2);
+  left: 5px;
+  z-index: 10;
+
+  box-sizing: content-box;
+  height: 20px;
+  width: 20px;
+
+  border: 15px solid white;
+  border-radius: 50% 50% 50% 0;
+  box-shadow: -2px 2px 4px 2px rgba(0, 0, 0, 0.3);
+  font-size: 0;
+  transform: rotate(230deg);
+}
+
+@media (max-width: $tablet) {
+  .main__wrapper {
+    width: 500px;
+    height: 500px;
+  }
+
+  .main__button {
+    font-size: 15px;
+  }
+
+  .main__flag {
+    top: calc(50% - 40px / 2);
+    border-width: 8px;
+  }
+}
+
+@media (max-width: $tablet-sm) {
+  .main__wrapper {
+    width: 400px;
+    height: 400px;
+  }
+
+  .main__button {
+    font-size: 14px;
+
+    span {
+      transform: rotate(90deg) translate(0, 9px);
+    }
+  }
+
+  .main__flag {
+    top: calc(50% - 30px / 2);
+    left: 4px;
+
+    height: 15px;
+    width: 15px;
+    border-width: 6px;
+  }
+}
+
+@media (max-width: $mobile) {
+  .main__wrapper {
+    width: 290px;
+    height: 290px;
+  }
+
+  .main__button {
+    font-size: 12px;
+
+    span {
+      transform: rotate(90deg) translate(0, 6px);
+    }
+  }
+
+  .main__flag {
+    top: calc(50% - 26px / 2);
+    left: 1px;
+
+    height: 13px;
+    width: 13px;
+    border-width: 5px;
+  }
+}

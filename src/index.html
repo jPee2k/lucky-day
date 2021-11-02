@@ -1,13 +1,94 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Lucky Day</title>
 </head>
-<body>
+<body class="body">
+<header class="header">
+  <h1 class="visually-hidden logo header__logo">lucky day</h1>
+</header>
 
+<section class="page page--active user-data">
+  <h2 class="visually-hidden">Пользовательские данные</h2>
+  <p class="logo page__logo" aria-hidden="true">lucky day</p>
+
+  <form class="user-data__form" autocomplete="off" novalidate>
+    <div class="user-data__input-wrapper">
+      <label class="user-data__label" for="name">Имя</label>
+      <input class="user-data__input" type="text" id="name" name="name" placeholder="Иван" required autofocus>
+      <span class="error__text"></span>
+    </div>
+    <div class="user-data__input-wrapper">
+      <label class="user-data__label" for="date">Дата рождения</label>
+      <input class="user-data__input" type="date" id="date" name="birthday" required>
+      <span class="error__text"></span>
+    </div>
+    <div class="user-data__checkbox-wrapper">
+      <input class="user-data__checkbox" type="checkbox" id="remember" name="remember">
+      <label class="user-data__label user-data__label--checkbox" for="remember">Запомнить меня</label>
+      <button class="user-data__button button button--submit">Вперед &rarr;</button>
+    </div>
+  </form>
+</section>
+<section class="page main">
+  <h2 class="visually-hidden">Колесо фортуны</h2>
+  <p class="logo page__logo" aria-hidden="true">lucky day</p>
+
+  <div class="main__wrapper">
+    <div class="main__center"></div>
+    <div class="main__flag"></div>
+    <ul class="main__list">
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>1</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>2</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>3</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>4</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>5</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>6</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>7</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>8</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>9</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>10</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>11</span></button>
+      </li>
+      <li class="main__item">
+        <button class="button main__button" type="button"><span>12</span></button>
+      </li>
+    </ul>
+  </div>
+  <nav class="main__nav">
+    <button class="button" id="lucky" type="button">Крутить на удачу</button>
+    <button class="button" id="chance" type="button">Проверить мульти-шансы</button>
+    <button class="button" id="horoscope" type="button">Получить выписку</button>
+  </nav>
+</section>
+<section class="page result">
+  <h2 class="visually-hidden">Результаты</h2>
+  <p class="logo page__logo" aria-hidden="true">lucky day</p>
+</section>
 </body>
 </html>

@@ -1,0 +1,29 @@
+.button {
+  min-height: 40px;
+  padding: 5px 10px;
+
+  border: none;
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  color: white;
+  text-shadow: 1px 1px 3px darkgray;
+  background-color: #549754;
+
+  &:hover,
+  &:focus {
+    background-color: forestgreen;
+  }
+
+  &:active {
+    background-color: darkgreen;
+  }
+
+  &:disabled {
+    cursor: default;
+
+    background-color: #acd4ac;
+    color: #d4dbd4;
+  }
+}

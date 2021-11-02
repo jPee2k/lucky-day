@@ -1,8 +1,15 @@
 const state = {
-  horoscopeURL: 'https://ignio.com/r/export/utf/xml/daily/com.xml',
-  username: 'user',
-  birthday: null,
-  result: null,
+  processState: 'filling', // sending, success, error
+  url: 'https://ignio.com/r/export/utf/xml/daily/com.xml',
+  userData: {
+    name: 'user',
+    birthday: null,
+    zodiacSign: null,
+    horoscope: '',
+    currentStatus: '',
+  },
+  validationErrors: {},
+  errors: [],
   zodiacsList: [
     { name: 'aries', dateFrom: '03.21', dateTo: '04.20' }, // Овен 21 марта – 20 апреля
     { name: 'taurus', dateFrom: '04.21', dateTo: '05.21' }, // Телец 21 апреля – 21 мая
@@ -17,6 +24,29 @@ const state = {
     { name: 'aquarius', dateFrom: '01.21', dateTo: '02.19' }, // Водолей 21 января – 19 февраля
     { name: 'pisces', dateFrom: '02.20', dateTo: '03.20' }, // Рыбы 20 февраля – 20 марта
   ],
+  roulette: {
+    currentItem: 1,
+    itemsCount: 12,
+    circleAngle: 360,
+    rotateCount: 5,
+    oneRotateTime: 1000, // ms
+    rotateTime: null,
+    rotateOnDegrees: 0,
+    statuses: [
+      'Лучший день!',
+      'Отличненько',
+      'Все хорошо',
+      'Окай',
+      'Тупо норм',
+      'Норма',
+      'Нормас',
+      'Хз-хз',
+      'Ну такое',
+      'Полушляпа',
+      'Почти шляпа',
+      'Полная шляпа!',
+    ],
+  },
 };
 
 export default state;
