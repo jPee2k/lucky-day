@@ -1,20 +1,12 @@
-import axios from 'axios';
-
 const getRemoteData = async (state) => {
-  const url = `https://cors-anywhere.herokuapp.com/${state.url}`;
-  const headers = new Headers({ 'Access-Control-Allow-Origin': '*' });
+  const proxy = 'https://thingproxy.freeboard.io';
+  const url = new URL(`/fetch/${state.url}`, proxy);
 
   try {
-    const response = await axios({
-      method: 'get',
-      url,
-      headers,
-    });
-
-    if (response.statusText === 'OK') {
-      const { data } = response;
-      const xmlParser = new DOMParser();
-      return xmlParser.parseFromString(data, 'application/xml');
+    const response = await fetch(url.toString());
+    if (response.ok) {
+      state.processState = 'success';
+      return await response.text();
     }
   } catch (err) {
     state.processState = 'error';

@@ -43,52 +43,58 @@
     <div class="main__flag"></div>
     <ul class="main__list">
       <li class="main__item">
-        <button class="button main__button" type="button"><span>1</span></button>
+        <button class="main__button" type="button"><span>1</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>2</span></button>
+        <button class="main__button" type="button"><span>2</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>3</span></button>
+        <button class="main__button" type="button"><span>3</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>4</span></button>
+        <button class="main__button" type="button"><span>4</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>5</span></button>
+        <button class="main__button" type="button"><span>5</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>6</span></button>
+        <button class="main__button" type="button"><span>6</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>7</span></button>
+        <button class="main__button" type="button"><span>7</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>8</span></button>
+        <button class="main__button" type="button"><span>8</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>9</span></button>
+        <button class="main__button" type="button"><span>9</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>10</span></button>
+        <button class="main__button" type="button"><span>10</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>11</span></button>
+        <button class="main__button" type="button"><span>11</span></button>
       </li>
       <li class="main__item">
-        <button class="button main__button" type="button"><span>12</span></button>
+        <button class="main__button" type="button"><span>12</span></button>
       </li>
     </ul>
   </div>
   <nav class="main__nav">
     <button class="button" id="lucky" type="button">Крутить на удачу</button>
-    <button class="button" id="chance" type="button">Проверить мульти-шансы</button>
+    <button class="button" id="chance" type="button" style="display: none;">Проверить мульти-шансы</button><!-- TODO multi chance -->
     <button class="button" id="horoscope" type="button">Получить выписку</button>
   </nav>
 </section>
 <section class="page result">
   <h2 class="visually-hidden">Результаты</h2>
   <p class="logo page__logo" aria-hidden="true">lucky day</p>
+
+  <div class="result__wrapper"></div>
+  <nav class="result__nav">
+    <button class="button" id="edit-data" type="button">Редактировать данные</button>
+    <button class="button" id="back-to-roulette" type="button">Эй, еще крутить</button>
+  </nav>
 </section>
 </body>
 </html>

@@ -26,16 +26,18 @@ const renderValidationErrors = (errors) => {
   });
 };
 
-const disable = (buttons) => {
-  buttons.forEach((button) => {
-    button.setAttribute('disabled', 'true');
-  });
-};
+const renderText = (className, text, prefix) => {
+  const wrapper = document.querySelector('.result__wrapper');
+  const existElement = document.querySelector(`.${className}`);
+  const element = document.createElement('p');
+  element.classList.add(className);
+  element.innerHTML = `${prefix}<br><span class="result__main-text">${text}</span>`;
 
-const enable = (buttons) => {
-  buttons.forEach((button) => {
-    button.removeAttribute('disabled');
-  });
+  if (existElement) {
+    wrapper.replaceChild(element, existElement);
+    return;
+  }
+  wrapper.prepend(element);
 };
 
 const rotateRouletteTo = (rotateTime, rotateOnDegrees) => {
@@ -46,38 +48,16 @@ const rotateRouletteTo = (rotateTime, rotateOnDegrees) => {
   list.style.transition = `transform ${rotateTime}ms linear`;
 };
 
-const renderProcess = (processState, state) => {
-  // const list = document.querySelector('.page .main__list');
-  const buttons = document.querySelectorAll('.main__nav .button');
-
-  switch (processState) {
-    case 'sending':
-      disable(buttons);
-      break;
-    case 'error':
-      enable(buttons);
-      break;
-    case 'success':
-      enable(buttons);
-      break;
-    default:
-      throw new Error(`wrong process state: ${processState}`);
-  }
-};
-
 const render = (path, value, state, i18n) => {
   switch (path) {
-    case 'processState':
-      renderProcess(value, state);
-      break;
     case 'userData.horoscope':
-      // TODO append text
-      // document.querySelector('body')
-      //   .textContent = value;
+      renderText('result__horo', value, `${i18n.t('horoscope.title')}:`);
+      break;
+    case 'userData.currentStatus':
+      renderText('result__calc', i18n.t(`statuses.${value}`), `${i18n.t('chance.title')}:`);
       break;
     case 'errors':
-      // TODO network error handler
-      console.error(value);
+      renderText('result__horo', `${i18n.t('networkError.title')}`, `${i18n.t('networkError.message')}`);
       break;
     case 'validationErrors':
       renderValidationErrors(value);
@@ -90,11 +70,11 @@ const render = (path, value, state, i18n) => {
   }
 };
 
-export const renderStatuses = (state) => {
+export const renderStatuses = (state, i18n) => {
   const statusElements = [...document.querySelectorAll('.main__list .main__button > span')];
   statusElements.forEach((el) => {
     const index = statusElements.indexOf(el);
-    el.textContent = state.roulette.statuses?.[index];
+    el.textContent = i18n.t(`statuses.${state.roulette.statuses?.[index]}`);
   });
 };
 

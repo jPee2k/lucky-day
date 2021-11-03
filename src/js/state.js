@@ -1,6 +1,7 @@
 const state = {
   processState: 'filling', // sending, success, error
   url: 'https://ignio.com/r/export/utf/xml/daily/com.xml',
+  storageAvailability: false,
   userData: {
     name: 'user',
     birthday: null,
@@ -24,6 +25,7 @@ const state = {
     { name: 'aquarius', dateFrom: '01.21', dateTo: '02.19' }, // Водолей 21 января – 19 февраля
     { name: 'pisces', dateFrom: '02.20', dateTo: '03.20' }, // Рыбы 20 февраля – 20 марта
   ],
+  fullHoroscope: '',
   roulette: {
     currentItem: 1,
     itemsCount: 12,
@@ -33,18 +35,7 @@ const state = {
     rotateTime: null,
     rotateOnDegrees: 0,
     statuses: [
-      'Лучший день!',
-      'Отличненько',
-      'Все хорошо',
-      'Окай',
-      'Тупо норм',
-      'Норма',
-      'Нормас',
-      'Хз-хз',
-      'Ну такое',
-      'Полушляпа',
-      'Почти шляпа',
-      'Полная шляпа!',
+      's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12',
     ],
   },
 };

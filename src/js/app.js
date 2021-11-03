@@ -2,9 +2,10 @@ import * as yup from 'yup';
 import _ from 'lodash';
 import unwatchedState from './state.js';
 import getRemoteData from './ajax.js';
-import { isStorageAvailable, saveData, hasData } from './storage.js';
+import {
+  isStorageAvailable, saveData, hasData, saveToState, compareDate,
+} from './storage.js';
 import { swapPage, renderStatuses } from './view.js';
-import runRouletteApp from './roulette.js';
 
 const getZodiacByBirthday = (day, month) => {
   const birthDate = new Date(`${month}.${day}`);
@@ -14,6 +15,24 @@ const getZodiacByBirthday = (day, month) => {
     return dateFrom <= birthDate && dateTo >= birthDate;
   });
   return data.name;
+};
+
+const parseXML = (text) => {
+  const xmlParser = new DOMParser();
+  return xmlParser.parseFromString(text, 'application/xml');
+};
+
+const getUserHoroscope = (zodiacSign) => {
+  if (zodiacSign && hasData(['fullHoroscope'])) {
+    const data = parseXML(localStorage.getItem('fullHoroscope'));
+
+    if (!data.querySelector('parsererror')) {
+      const horoscopeForToday = data.querySelector(`${zodiacSign} today`);
+      return horoscopeForToday.textContent.trim();
+    }
+  }
+
+  return null;
 };
 
 const userFormHandler = (state, i18n, evt) => {
@@ -37,12 +56,13 @@ const userFormHandler = (state, i18n, evt) => {
 
   schema.validate(fields, { abortEarly: false })
     .then((data) => {
-      state.userData = { ...data };
+      state.userData = { ...state.userData, ...data };
       state.userData.zodiacSign = getZodiacByBirthday(
         data.birthday.getDate(),
         data.birthday.getMonth() + 1,
       );
-      if (data.remember && isStorageAvailable()) {
+      state.userData.horoscope = getUserHoroscope(state.userData.zodiacSign);
+      if (data.remember && state.storageAvailability) {
         saveData(state.userData);
       }
       swapPage('main');
@@ -52,31 +72,121 @@ const userFormHandler = (state, i18n, evt) => {
     });
 };
 
-const rouletteHandler = async (state, evt) => {
+const calculateRotationData = (data) => {
+  const {
+    statuses, currentItem: fromItem, nextItem: toItem, rotateCount, oneRotateTime, rotateOnDegrees,
+  } = data;
+
+  // calculate angles
+  const itemsCount = statuses.length;
+  const angleByStep = 360 / itemsCount;
+
+  // calculate steps
+  const stepsBeforeStop = itemsCount * rotateCount;
+  let steps;
+  if (fromItem > toItem) {
+    steps = itemsCount - (fromItem - toItem);
+  } else {
+    steps = toItem - fromItem;
+  }
+  const sumOfSteps = steps + stepsBeforeStop;
+
+  // calculate time
+  const rotateTimeByStep = oneRotateTime / itemsCount;
+  const rotateTime = rotateTimeByStep * sumOfSteps;
+
+  return {
+    rotateOnDegrees: rotateOnDegrees - (sumOfSteps * angleByStep),
+    rotateTime,
+  };
+};
+
+const getNextItem = (currentItem, currentStatus) => {
+  if (currentStatus) {
+    return currentItem;
+  }
+  let nextItem;
+  do {
+    nextItem = _.random(1, 12);
+  } while (nextItem === currentItem);
+  return nextItem;
+};
+
+const rouletteHandler = (state, evt) => {
   evt.preventDefault();
 
-  runRouletteApp(state);
-  state.processState = 'sending';
-  const data = await getRemoteData(state);
+  const {
+    statuses, currentItem, rotateCount, oneRotateTime, rotateOnDegrees,
+  } = state.roulette;
 
-  if (data) {
-    if (data.querySelector('parsererror')) {
-      state.errors.push('xml parser error');
-      state.processState = 'error';
-    }
-
-    const horoscopeForToday = data.querySelector(`${state.userData.zodiacSign} today`);
-    state.userData.horoscope = horoscopeForToday.textContent.trim();
-    state.processState = 'success';
+  // one day - one status
+  let nextItem;
+  if (compareDate() && localStorage.getItem('dailyItem')) {
+    nextItem = parseInt(localStorage.getItem('dailyItem'), 10);
+  } else {
+    nextItem = getNextItem(currentItem, state.userData.currentStatus);
+    saveData({ dailyItem: currentItem });
   }
+
+  const rotationData = calculateRotationData({
+    statuses, currentItem, nextItem, rotateCount, oneRotateTime, rotateOnDegrees,
+  });
+  state.roulette = { ...state.roulette, ...rotationData, currentItem: nextItem };
+  state.userData.currentStatus = state.roulette.statuses[nextItem - 1];
+};
+
+const getHoroscope = async (state) => {
+  state.processState = 'sending';
+  const text = await getRemoteData(state);
+  const data = parseXML(text);
+
+  if (data.querySelector('parsererror')) {
+    state.errors.push('xml parser error');
+    return null;
+  }
+
+  if (state.storageAvailability) {
+    saveData({ fullHoroscope: text });
+  }
+
+  return data;
+};
+
+// TODO multi chance
+const multiChanceHandler = (state, evt) => {
+  const result = [];
+  for (let i = 0; i <= 10000; i += 1) {
+    const random = _.random(0, 4);
+    if (result[random]) {
+      result[random] += 1;
+    } else {
+      result[random] = 1;
+    }
+  }
+
+  const max = Math.max(...result);
+  const mark = result.indexOf(max) + 1; // result
 };
 
 const app = async (state, i18n) => {
-  renderStatuses(state);
+  renderStatuses(state, i18n);
 
-  // if (hasData()) {
-  //   swapPage('main');
-  // }
+  if (isStorageAvailable()) {
+    state.storageAvailability = true;
+    saveData({ today: new Date().toLocaleDateString() });
+  }
+
+  const fields = ['name', 'birthday', 'zodiacSign', 'fullHoroscope'];
+  if (hasData(fields)) {
+    saveToState(fields, state.userData);
+    swapPage('main');
+  }
+
+  if (!hasData(['fullHoroscope'] || !compareDate())) {
+    await getHoroscope(state);
+  }
+
+  state.userData.horoscope = getUserHoroscope(state.userData.zodiacSign);
 
   /* --- user form ---*/
   const userForm = document.querySelector('.user-data__form');
@@ -85,6 +195,31 @@ const app = async (state, i18n) => {
   /* --- roulette ---*/
   const luckyButton = document.querySelector('#lucky');
   luckyButton.addEventListener('click', (evt) => rouletteHandler(state, evt));
+
+  /* --- multi-chance ---*/
+  const multiButton = document.querySelector('#chance');
+  multiButton.addEventListener('click', (evt) => multiChanceHandler(state, evt));
+
+  /* --- result button ---*/
+  const resultButton = document.querySelector('#horoscope');
+  resultButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    swapPage('result');
+  });
+
+  /* --- edit button ---*/
+  const editButton = document.querySelector('#edit-data');
+  editButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    swapPage('user-data');
+  });
+
+  /* --- backTo button ---*/
+  const backToButton = document.querySelector('#back-to-roulette');
+  backToButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    swapPage('main');
+  });
 };
 
 export default app;

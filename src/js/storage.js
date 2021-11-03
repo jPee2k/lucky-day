@@ -20,4 +20,22 @@ export const saveData = (data) => {
   });
 };
 
-export const hasData = () => !!localStorage.getItem('birthday');
+export const hasData = (data = []) => {
+  if (!isStorageAvailable()) {
+    return false;
+  }
+  return data.every((key) => localStorage.getItem(key));
+};
+
+export const saveToState = (data, userData) => {
+  data.forEach((key) => {
+    userData[key] = localStorage.getItem(key);
+  });
+};
+
+export const compareDate = () => {
+  if (!isStorageAvailable()) {
+    return false;
+  }
+  return localStorage.getItem('today') === new Date().toLocaleDateString();
+};
