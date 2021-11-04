@@ -3,7 +3,7 @@ const getRemoteData = async (state) => {
   const url = new URL(`/fetch/${state.url}`, proxy);
 
   try {
-    const response = await fetch(url.toString());
+    const response = await fetch(url.toString(), { mode: 'no-cors' });
     if (response.ok) {
       state.processState = 'success';
       return await response.text();
