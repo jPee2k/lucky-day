@@ -140,7 +140,7 @@ const getHoroscope = async (state) => {
   const text = await getRemoteData(state);
   const data = parseXML(text);
 
-  if (data.querySelector('parsererror')) {
+  if (data.querySelector('parsererror') || !text) {
     state.errors.push('xml parser error');
     return null;
   }
