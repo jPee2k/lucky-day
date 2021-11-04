@@ -64,6 +64,8 @@ const render = (path, value, state, i18n) => {
       break;
     case 'roulette':
       rotateRouletteTo(value.rotateTime, value.rotateOnDegrees);
+      document.querySelector('#horoscope')
+        .removeAttribute('hidden');
       break;
     default:
       break;
