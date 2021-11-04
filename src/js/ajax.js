@@ -1,9 +1,10 @@
+// TODO fix fetch (on vercel)
 const getRemoteData = async (state) => {
   const proxy = 'https://thingproxy.freeboard.io';
   const url = new URL(`/fetch/${state.url}`, proxy);
 
   try {
-    const response = await fetch(url.toString(), { mode: 'no-cors' });
+    const response = await fetch(url.toString());
     if (response.ok) {
       state.processState = 'success';
       return await response.text();
