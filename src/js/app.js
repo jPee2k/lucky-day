@@ -125,7 +125,7 @@ const rouletteHandler = (state, evt) => {
     nextItem = parseInt(localStorage.getItem('dailyItem'), 10);
   } else {
     nextItem = getNextItem(currentItem, state.userData.currentStatus);
-    saveData({ dailyItem: currentItem });
+    saveData({ dailyItem: nextItem });
   }
 
   const rotationData = calculateRotationData({
