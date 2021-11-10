@@ -146,7 +146,10 @@ const getHoroscope = async (state) => {
   }
 
   if (state.storageAvailability) {
-    saveData({ fullHoroscope: text });
+    saveData({
+      fullHoroscope: text,
+      today: new Date().toLocaleDateString(),
+    });
   }
 
   return data;
@@ -173,7 +176,6 @@ const app = async (state, i18n) => {
 
   if (isStorageAvailable()) {
     state.storageAvailability = true;
-    saveData({ today: new Date().toLocaleDateString() });
   }
 
   const fields = ['name', 'birthday', 'zodiacSign', 'fullHoroscope'];
@@ -182,7 +184,7 @@ const app = async (state, i18n) => {
     swapPage('main');
   }
 
-  if (!hasData(['fullHoroscope'] || !compareDate())) {
+  if (!hasData(['fullHoroscope']) || !compareDate()) {
     await getHoroscope(state);
   }
 
