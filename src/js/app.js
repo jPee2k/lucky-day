@@ -178,14 +178,14 @@ const app = async (state, i18n) => {
     state.storageAvailability = true;
   }
 
+  if (!hasData(['fullHoroscope']) || !compareDate()) {
+    await getHoroscope(state);
+  }
+
   const fields = ['name', 'birthday', 'zodiacSign', 'fullHoroscope'];
   if (hasData(fields)) {
     saveToState(fields, state.userData);
     swapPage('main');
-  }
-
-  if (!hasData(['fullHoroscope']) || !compareDate()) {
-    await getHoroscope(state);
   }
 
   state.userData.horoscope = getUserHoroscope(state.userData.zodiacSign);
