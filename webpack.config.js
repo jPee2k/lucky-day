@@ -1,7 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const pages = ['index.html'];
 const multipleHtmlPlugins = pages
@@ -69,16 +69,16 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'css/bundle.css',
     }),
-    // new FaviconsWebpackPlugin({
-    //   logo: path.resolve(__dirname, 'src/images/icons/favicon.svg'),
-    //   prefix: '',
-    //   publicPath: 'images/favicons',
-    //   outputPath: path.resolve(__dirname, 'dist/images/favicons'),
-    //   inject: (htmlPlugin) => pages.includes(path.basename(htmlPlugin.options.filename)),
-    //   favicons: {
-    //     appName: 'lucky-day',
-    //     developerName: 'jPee',
-    //   },
-    // }),
+    new FaviconsWebpackPlugin({
+      logo: path.resolve(__dirname, 'src/images/icons/favicon.svg'),
+      prefix: '',
+      publicPath: 'images/favicons',
+      outputPath: path.resolve(__dirname, 'dist/images/favicons'),
+      inject: (htmlPlugin) => pages.includes(path.basename(htmlPlugin.options.filename)),
+      favicons: {
+        appName: 'lucky-day',
+        developerName: 'jPee',
+      },
+    }),
   ],
 };
