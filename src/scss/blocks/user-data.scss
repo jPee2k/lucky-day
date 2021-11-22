@@ -35,7 +35,7 @@
 }
 
 .user-data__checkbox {
-  display: none;
+  @include visibility-hidden;
 
   & ~ .user-data__label--checkbox {
     padding-left: 40px;
@@ -76,6 +76,11 @@
 
   &:disabled ~ .user-data__label--checkbox::after {
     background-image: url('../images/icons/check-disabled.svg');
+  }
+
+  &:focus-visible ~ .user-data__label--checkbox::before {
+    outline: 2px dashed darkgreen;
+    outline-offset: 2px;
   }
 }
 
