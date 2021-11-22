@@ -58,6 +58,7 @@ const render = (path, value, state, i18n) => {
       break;
     case 'errors':
       renderText('result__horo', `${i18n.t('networkError.title')}`, `${i18n.t('networkError.message')}`);
+      console.error(value[0]);
       break;
     case 'validationErrors':
       renderValidationErrors(value);

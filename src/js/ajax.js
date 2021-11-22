@@ -1,14 +1,13 @@
 const getRemoteData = async (state) => {
-  // const proxy = 'https://thingproxy.freeboard.io';
-  // const url = new URL(`/fetch/${state.url}`, proxy);
-  const proxy = 'https://cors-anywhere.herokuapp.com';
-  const url = `${proxy}/${state.url}`;
+  const url = new URL('https://hexlet-allorigins.herokuapp.com/get');
+  url.searchParams.append('url', state.url);
 
   try {
     const response = await fetch(url.toString());
     if (response.ok) {
       state.processState = 'success';
-      return await response.text();
+      const data = await response.json();
+      return data.contents;
     }
   } catch (err) {
     state.processState = 'error';
