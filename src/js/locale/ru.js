@@ -29,10 +29,10 @@ export default {
       pisces: 'Рыбы',
     },
     horoscope: {
-      title: 'Гороскоп',
+      title: 'Гороскоп для',
     },
     chance: {
-      title: 'Твоё везение на сегодня',
+      title: 'твоё везение на сегодня',
     },
     networkError: {
       title: 'Оупс, ошибочка=(',

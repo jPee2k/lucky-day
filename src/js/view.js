@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const swapPage = (selector) => {
   const activePage = document.querySelector('.page--active');
   const currentPage = document.querySelector(`.${selector}`);
@@ -51,10 +53,18 @@ const rotateRouletteTo = (rotateTime, rotateOnDegrees) => {
 const render = (path, value, state, i18n) => {
   switch (path) {
     case 'userData.horoscope':
-      renderText('result__horo', value, `${i18n.t('horoscope.title')}:`);
+      renderText(
+        'result__horo',
+        value,
+        `${i18n.t('horoscope.title')} ${i18n.t(`zodiacSigns.${state.userData.zodiacSign}`)}:`,
+      );
       break;
     case 'userData.currentStatus':
-      renderText('result__calc', i18n.t(`statuses.${value}`), `${i18n.t('chance.title')}:`);
+      renderText(
+        'result__calc',
+        i18n.t(`statuses.${value}`),
+        `${_.capitalize(state.userData.name)}, ${i18n.t('chance.title')}:`,
+      );
       break;
     case 'errors':
       renderText('result__horo', `${i18n.t('networkError.title')}`, `${i18n.t('networkError.message')}`);
