@@ -125,7 +125,10 @@ const rouletteHandler = (state, evt) => {
     nextItem = parseInt(localStorage.getItem('dailyItem'), 10);
   } else {
     nextItem = getNextItem(currentItem, state.userData.currentStatus);
-    saveData({ dailyItem: nextItem });
+    saveData({
+      dailyItem: nextItem,
+      today: new Date().toLocaleDateString(),
+    });
   }
 
   const rotationData = calculateRotationData({
@@ -148,7 +151,6 @@ const getHoroscope = async (state) => {
   if (state.storageAvailability) {
     saveData({
       fullHoroscope: text,
-      today: new Date().toLocaleDateString(),
     });
   }
 
